@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vsm_postgres
+    environment:
+      POSTGRES_DB: vsm_db
+      POSTGRES_USER: vsm_user
+      POSTGRES_PASSWORD: vsm_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - vsm_pgdata:/var/lib/postgresql/data
+    networks:
+      - vsm_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vsm_user -d vsm_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vsm_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/.venv
+    networks:
+      - vsm_network
+    environment:
+      - DEBUG=True
+      - DATABASE_ENGINE=postgres
+      - POSTGRES_DB=vsm_db
+      - POSTGRES_USER=vsm_user
+      - POSTGRES_PASSWORD=vsm_password
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/components/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vsm_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - vsm_network
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5173/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  vsm_network:
+    driver: bridge
+
+volumes:
+  vsm_pgdata:

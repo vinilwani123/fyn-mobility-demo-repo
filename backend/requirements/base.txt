@@ -1,0 +1,5 @@
+django
+djangorestframework
+django-filter
+psycopg[binary]
+django-cors-headers
