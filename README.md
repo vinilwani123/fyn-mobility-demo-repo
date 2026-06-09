@@ -107,6 +107,43 @@ Here's a quick look at some of the core REST endpoints:
 - `POST /api/v1/transactions/simulate_payment/` - Calculates the final invoice.
 
 
+## Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/Dashboard.png)
+
+### Vehicle Management
+
+![Vehicles](screenshots/Vehicles.png)
+
+### Issue Management & Component Assignment
+
+![Issues](screenshots/issues.png)
+
+![Assign Component](screenshots/assign-component.png)
+
+### Checkout
+
+![Checkout](screenshots/checkout.png)
+
+### Receipt
+
+![Receipt](screenshots/receipt.png)
+
+### PostgreSQL Integration
+
+![PostgreSQL](screenshots/Postgres.png)
+
+### Dockerized Deployment
+
+![Docker](screenshots/docker-running.png)
+
+### Structured Logging
+
+![Logs](screenshots/logs.png)
+
+
 ## Future Improvements
 If this were being prepped for a large-scale production release, I'd look into adding:
 - **Redis & Celery**: For caching component catalogs and handling background asynchronous tasks.
