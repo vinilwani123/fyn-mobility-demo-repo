@@ -106,8 +106,6 @@ Here's a quick look at some of the core REST endpoints:
 - `POST /api/v1/issues/{id}/assign_component/` - Assigns a part to an open issue.
 - `POST /api/v1/transactions/simulate_payment/` - Calculates the final invoice.
 
-## Screenshots
-*(Add screenshots of the Dashboard, Vehicle Registration, Issue Management, and Receipt pages here)*
 
 ## Future Improvements
 If this were being prepped for a large-scale production release, I'd look into adding:
