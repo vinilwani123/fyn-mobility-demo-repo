@@ -77,6 +77,23 @@ If you need to access the database directly or log into the Django Admin panel, 
 - **User**: `vsm_user`
 - **Password**: `vsm_password`
 - **Port**: `5432`
+- **Host (from local host)**: `localhost`
+- **Host (within docker network)**: `postgres`
+
+**How to Access the Database:**
+- **Method 1: Interactive CLI (via Docker)**
+  Run this command to open the database shell:
+  ```bash
+  docker compose exec postgres psql -U vsm_user -d vsm_db
+  ```
+- **Method 2: GUI Database Client (e.g., pgAdmin, DBeaver)**
+  Configure your database GUI client using the credentials above (Host: `localhost`, Port: `5432`).
+- **Method 3: Django Database Shell**
+  Run this command to open Django's SQL shell:
+  ```bash
+  docker compose exec backend python manage.py dbshell
+  ```
+
 
 **Django Superadmin:**
 *(Since no superadmin is seeded by default, you can easily create one using the command below)*
